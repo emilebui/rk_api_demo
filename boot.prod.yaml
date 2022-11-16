@@ -1,0 +1,104 @@
+---
+# Config file
+config:
+  - name: app-config
+    envPrefix: "app"
+    path: "config/config.yaml"
+pkgEntry:
+  name: pkg-config
+  ErrorTemplatePath: "config/error_messages.json"
+  JWTPublicKeyPath: "config/public_key.pem"
+  JWTPrivateKeyPath: "config/private_key.pem"
+
+
+# Logger config
+logger:
+  - name: app-logger
+    zap:
+      level: info                                         # Optional, default: info
+      development: true                                   # Optional, default: true
+      disableCaller: false                                # Optional, default: false
+      disableStacktrace: true                             # Optional, default: true
+      encoding: console                                   # Optional, default: console
+      outputPaths: [ "stdout" ]                             # Optional, default: [stdout]
+      errorOutputPaths: [ "stderr" ]                        # Optional, default: [stderr]
+      #outputPaths: ["logs/log.log"]
+      #errorOutputPaths: ["logs/error_log.log"]
+      encoderConfig: # Optional
+        timeKey: "ts"                                     # Optional, default: ts
+        levelKey: "level"                                 # Optional, default: level
+        nameKey: "logger"                                 # Optional, default: logger
+        callerKey: "caller"                               # Optional, default: caller
+        messageKey: "msg"                                 # Optional, default: msg
+        stacktraceKey: "stacktrace"                       # Optional, default: stacktrace
+        skipLineEnding: false                             # Optional, default: false
+        lineEnding: "\n"                                  # Optional, default: \n
+        consoleSeparator: "\t"                            # Optional, default: \t
+      sampling: # Optional, default: nil
+        initial: 0                                        # Optional, default: 0
+        thereafter: 0                                     # Optional, default: 0
+      initialFields: # Optional, default: empty map
+        service: rk_echo_api
+event:
+  - name: my-event
+    outputPaths: [""]
+    #outputPaths: ["logs/event.log"]
+
+# Echo App Config
+echo:
+  - name: greeter                                          # Required
+    port: 8080                                             # Required
+    enabled: true                                          # Required
+    eventEntry: my-event
+    commonService:
+      enabled: true                                       # Optional, default: false
+    sw:
+      enabled: true                                        # Optional, default: false
+    docs:
+      enabled: true                                        # Optional, default: false
+    middleware:
+      logging:
+        enabled: true
+#        ignore: [""]                                      # Optional, default: []
+#        loggerEncoding: "console"                         # Optional, default: "console"
+#        loggerOutputPaths: ["logs/app.log"]               # Optional, default: ["stdout"]
+
+
+# DB Config, if you don't use any of these, just delete
+
+# SQL DB, it is best recommended to use sqlite for testing purposes with your sql database of your choice
+# In this example, I use sqlite with postgres.
+
+# This is the postgres config, if you want to use other database. Check out this link for other configurations.
+# Link: https://github.com/rookie-ninja/rk-boot/tree/main/example/database
+postgres:
+  - name: postgres-db                     # Required
+    enabled: true                     # Required
+    domain: "*"                       # Optional
+    addr: "postgres:5432"            # Optional, default: localhost:5432
+    user: postgres                    # Optional, default: postgres
+    pass: admin                       # Optional, default: pass
+    database:
+      - name: test                    # Required, if you change this value, you also need to change the database name in `db/sqldb/sqldb.go`
+        autoCreate: true              # Optional, default: false
+#        dryRun: true                 # Optional, default: false
+#        preferSimpleProtocol: false  # Optional, default: false
+#        params: []                   # Optional, default: ["sslmode=disable","TimeZone=Asia/Shanghai"]
+#    loggerEntry: ""                  # Optional, default: default logger with STDOUT
+
+
+# Non-sql Database
+# There are more advanced options available here: https://github.com/rookie-ninja/rk-boot/blob/main/example/database/mongodb/boot.yaml
+mongo:
+  - name: "mongo-db"                            # Required
+    enabled: true                               # Required
+    simpleURI: "mongodb://mongo:27017"      # Required
+    database:
+      - name: "test"                           # Required, if you change this value, you also need to change the database name in `db/mongo/db_conn.go`
+
+# Cache Database Config
+# There are more advanced options available here: https://github.com/rookie-ninja/rk-boot/blob/main/example/database/redis/boot.yaml
+redis:
+  - name: redis                      # Required
+    enabled: true                    # Required
+    addrs: ["redis:6379"]        # Required, One addr is for single, multiple is for cluster

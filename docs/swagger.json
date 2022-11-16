@@ -1,0 +1,190 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample rk-demo echo server.",
+        "title": "Demo Echo API Framework",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/v1/greeter": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Demo"
+                ],
+                "summary": "Say hello to the current user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/demo.GreeterResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/errutil.EchoErrorStruct"
+                        }
+                    }
+                }
+            }
+        },
+        "/wagers": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wager"
+                ],
+                "summary": "Place a wager",
+                "parameters": [
+                    {
+                        "description": "Input Required",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wager.PlaceWagerInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Wager"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/errutil.EchoErrorStruct"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "demo.GreeterResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "errutil.EchoErrorStruct": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "info": {}
+            }
+        },
+        "models.Transaction": {
+            "type": "object",
+            "properties": {
+                "bought_at": {
+                    "type": "string"
+                },
+                "buying_price": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "wager_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Wager": {
+            "type": "object",
+            "properties": {
+                "amount_sold": {
+                    "type": "number"
+                },
+                "current_selling_price": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "odd": {
+                    "type": "integer"
+                },
+                "percentage_sold": {
+                    "type": "integer"
+                },
+                "placed_at": {
+                    "type": "string"
+                },
+                "selling_percentage": {
+                    "type": "integer"
+                },
+                "selling_price": {
+                    "type": "number"
+                },
+                "total_wager_value": {
+                    "type": "integer"
+                },
+                "transactions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Transaction"
+                    }
+                }
+            }
+        },
+        "wager.PlaceWagerInput": {
+            "type": "object",
+            "required": [
+                "odd",
+                "selling_percentage",
+                "selling_price",
+                "total_wager_value"
+            ],
+            "properties": {
+                "odd": {
+                    "type": "integer"
+                },
+                "selling_percentage": {
+                    "type": "integer",
+                    "maximum": 100,
+                    "minimum": 1
+                },
+                "selling_price": {
+                    "type": "integer"
+                },
+                "total_wager_value": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

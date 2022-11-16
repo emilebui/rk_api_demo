@@ -1,0 +1,126 @@
+definitions:
+  demo.GreeterResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  errutil.EchoErrorStruct:
+    properties:
+      code:
+        type: integer
+      error:
+        type: string
+      info: {}
+    type: object
+  models.Transaction:
+    properties:
+      bought_at:
+        type: string
+      buying_price:
+        type: number
+      id:
+        type: integer
+      wager_id:
+        type: integer
+    type: object
+  models.Wager:
+    properties:
+      amount_sold:
+        type: number
+      current_selling_price:
+        type: number
+      id:
+        type: integer
+      odd:
+        type: integer
+      percentage_sold:
+        type: integer
+      placed_at:
+        type: string
+      selling_percentage:
+        type: integer
+      selling_price:
+        type: number
+      total_wager_value:
+        type: integer
+      transactions:
+        items:
+          $ref: '#/definitions/models.Transaction'
+        type: array
+    type: object
+  wager.PlaceWagerInput:
+    properties:
+      odd:
+        type: integer
+      selling_percentage:
+        maximum: 100
+        minimum: 1
+        type: integer
+      selling_price:
+        type: integer
+      total_wager_value:
+        type: integer
+    required:
+    - odd
+    - selling_percentage
+    - selling_price
+    - total_wager_value
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample rk-demo echo server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Demo Echo API Framework
+  version: "1.0"
+paths:
+  /v1/greeter:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/demo.GreeterResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errutil.EchoErrorStruct'
+      summary: Say hello to the current user
+      tags:
+      - Demo
+  /wagers:
+    post:
+      parameters:
+      - description: Input Required
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/wager.PlaceWagerInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Wager'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errutil.EchoErrorStruct'
+      summary: Place a wager
+      tags:
+      - Wager
+securityDefinitions:
+  JWT:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
