@@ -1,9 +1,4 @@
 definitions:
-  demo.GreeterResponse:
-    properties:
-      message:
-        type: string
-    type: object
   errutil.EchoErrorStruct:
     properties:
       code:
@@ -31,37 +26,40 @@ definitions:
         type: number
       id:
         type: integer
-      odd:
-        type: integer
+      odds:
+        type: number
       percentage_sold:
-        type: integer
+        type: number
       placed_at:
         type: string
       selling_percentage:
-        type: integer
+        type: number
       selling_price:
         type: number
       total_wager_value:
-        type: integer
-      transactions:
-        items:
-          $ref: '#/definitions/models.Transaction'
-        type: array
+        type: number
     type: object
-  wager.PlaceWagerInput:
+  wagerdto.BuyWagerInput:
     properties:
-      odd:
-        type: integer
+      buying_price:
+        type: number
+    required:
+    - buying_price
+    type: object
+  wagerdto.PlaceWagerInput:
+    properties:
+      odds:
+        type: number
       selling_percentage:
         maximum: 100
         minimum: 1
-        type: integer
+        type: number
       selling_price:
-        type: integer
+        type: number
       total_wager_value:
-        type: integer
+        type: number
     required:
-    - odd
+    - odds
     - selling_percentage
     - selling_price
     - total_wager_value
@@ -79,23 +77,63 @@ info:
   title: Demo Echo API Framework
   version: "1.0"
 paths:
-  /v1/greeter:
-    get:
+  /buy/{wager_id}:
+    post:
+      parameters:
+      - description: ID of the wager to buy
+        in: path
+        name: wager_id
+        required: true
+        type: string
+      - description: Input Required
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/wagerdto.BuyWagerInput'
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
-            $ref: '#/definitions/demo.GreeterResponse'
+            $ref: '#/definitions/models.Transaction'
         default:
           description: ""
           schema:
             $ref: '#/definitions/errutil.EchoErrorStruct'
-      summary: Say hello to the current user
+      summary: Buy a wager
       tags:
-      - Demo
+      - Wager
   /wagers:
+    get:
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: string
+      - description: Limit
+        in: query
+        name: limit
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/errutil.EchoErrorStruct'
+      summary: List all wager
+      tags:
+      - Wager
     post:
       parameters:
       - description: Input Required
@@ -103,7 +141,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/wager.PlaceWagerInput'
+          $ref: '#/definitions/wagerdto.PlaceWagerInput'
       produces:
       - application/json
       responses:

@@ -16,20 +16,38 @@
         "version": "1.0"
     },
     "paths": {
-        "/v1/greeter": {
-            "get": {
+        "/buy/{wager_id}": {
+            "post": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Demo"
+                    "Wager"
                 ],
-                "summary": "Say hello to the current user",
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                "summary": "Buy a wager",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the wager to buy",
+                        "name": "wager_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Input Required",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/demo.GreeterResponse"
+                            "$ref": "#/definitions/wagerdto.BuyWagerInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Transaction"
                         }
                     },
                     "default": {
@@ -42,6 +60,49 @@
             }
         },
         "/wagers": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wager"
+                ],
+                "summary": "List all wager",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Transaction"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/errutil.EchoErrorStruct"
+                        }
+                    }
+                }
+            },
             "post": {
                 "produces": [
                     "application/json"
@@ -57,7 +118,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/wager.PlaceWagerInput"
+                            "$ref": "#/definitions/wagerdto.PlaceWagerInput"
                         }
                     }
                 ],
@@ -79,14 +140,6 @@
         }
     },
     "definitions": {
-        "demo.GreeterResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
         "errutil.EchoErrorStruct": {
             "type": "object",
             "properties": {
@@ -128,54 +181,59 @@
                 "id": {
                     "type": "integer"
                 },
-                "odd": {
-                    "type": "integer"
+                "odds": {
+                    "type": "number"
                 },
                 "percentage_sold": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "placed_at": {
                     "type": "string"
                 },
                 "selling_percentage": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "selling_price": {
                     "type": "number"
                 },
                 "total_wager_value": {
-                    "type": "integer"
-                },
-                "transactions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Transaction"
-                    }
+                    "type": "number"
                 }
             }
         },
-        "wager.PlaceWagerInput": {
+        "wagerdto.BuyWagerInput": {
             "type": "object",
             "required": [
-                "odd",
+                "buying_price"
+            ],
+            "properties": {
+                "buying_price": {
+                    "type": "number"
+                }
+            }
+        },
+        "wagerdto.PlaceWagerInput": {
+            "type": "object",
+            "required": [
+                "odds",
                 "selling_percentage",
                 "selling_price",
                 "total_wager_value"
             ],
             "properties": {
-                "odd": {
-                    "type": "integer"
+                "odds": {
+                    "type": "number"
                 },
                 "selling_percentage": {
-                    "type": "integer",
+                    "type": "number",
                     "maximum": 100,
                     "minimum": 1
                 },
                 "selling_price": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "total_wager_value": {
-                    "type": "integer"
+                    "type": "number"
                 }
             }
         }

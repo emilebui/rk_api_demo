@@ -3,13 +3,11 @@ package cmd
 import (
 	rkecho "github.com/rookie-ninja/rk-echo/boot"
 	"rk_echo/db/sqldb"
-	"rk_echo/service/demo"
-	"rk_echo/service/wager"
+	"rk_echo/service/wager/endpoint"
 )
 
 func RegisterAPI(echoEntry *rkecho.EchoEntry) {
-	wager.RegisterAPI(echoEntry)
-	demo.RegisterAPI(echoEntry)
+	wagerep.RegisterAPI(echoEntry)
 }
 
 func RegisterDB() {
