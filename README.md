@@ -71,6 +71,7 @@
 - Build: `docker build -t rk_echo:latest .`
 - To build and run the entire stack (rk_echo, mongo, postgres, redis):
   - Run: `docker-compose up -d`
+  - Or: `./start.sh`
 
 ### Testing
 
