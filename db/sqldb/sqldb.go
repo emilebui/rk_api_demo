@@ -17,8 +17,7 @@ func InitDB() {
 	// The input in `GetDB` function must be the same as one of the database names in the `boot.yaml` config file.
 	DB = pgEntry.GetDB("test")
 	if !DB.DryRun {
-		DB.AutoMigrate(&models.Wager{})
-		DB.AutoMigrate(&models.Transaction{})
+		DB.AutoMigrate(&models.Wager{}, &models.Transaction{})
 	}
 }
 
@@ -33,10 +32,10 @@ func InitTestDB() *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(cxn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
-	errutil.PanicHandler(err)
+	db.Exec("PRAGMA foreign_keys = ON", nil)
 	db.Migrator().DropTable(&models.Wager{})
 	db.Migrator().DropTable(&models.Transaction{})
-	DB.AutoMigrate(&models.Wager{})
-	DB.AutoMigrate(&models.Transaction{})
+	db.AutoMigrate(&models.Wager{}, &models.Transaction{})
+	errutil.PanicHandler(err)
 	return db
 }

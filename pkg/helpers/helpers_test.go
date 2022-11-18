@@ -24,6 +24,6 @@ func TestRoundFloat(t *testing.T) {
 	assert.Equal(t, RoundFloat(0.55555), 0.56)
 	assert.Equal(t, RoundFloat(0.232323), 0.23)
 	assert.Equal(t, RoundFloat(0.49876), 0.5)
-	assert.Equal(t, RoundFloat(0.99999), 1)
+	assert.Equal(t, RoundFloat(0.99999), 1.0)
 	assert.Equal(t, RoundFloat(0.99), 0.99)
 }

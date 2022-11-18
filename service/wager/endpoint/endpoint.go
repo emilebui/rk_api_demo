@@ -39,7 +39,7 @@ func PlaceWager(ctx echo.Context) error {
 		return err.ReturnErrorMessage(ctx)
 	}
 
-	return ctx.JSON(http.StatusCreated, wager)
+	return ctx.JSON(http.StatusCreated, wagerdto.Struct2PlaceWagerResponse(wager))
 }
 
 // BuyWager handler
@@ -72,7 +72,7 @@ func BuyWager(ctx echo.Context) error {
 		return err.ReturnErrorMessage(ctx)
 	}
 
-	return ctx.JSON(http.StatusCreated, transaction)
+	return ctx.JSON(http.StatusCreated, wagerdto.Struct2BuyWagerResponse(transaction))
 }
 
 // ListWager handler
@@ -107,5 +107,5 @@ func ListWager(ctx echo.Context) error {
 	if err != nil {
 		return err.ReturnErrorMessage(ctx)
 	}
-	return ctx.JSON(http.StatusOK, wagerList)
+	return ctx.JSON(http.StatusOK, wagerdto.ToListResponse(wagerList))
 }

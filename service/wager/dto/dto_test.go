@@ -18,12 +18,12 @@ func TestStruct2PlaceWagerResponse(t *testing.T) {
 	}
 	obj = Struct2PlaceWagerResponse(obj)
 
-	assert.Equal(t, 100, obj.TotalWagerValue)
-	assert.Equal(t, 100, obj.Odds)
-	assert.Equal(t, 69, obj.SellingPercentage)
+	assert.Equal(t, 100.0, obj.TotalWagerValue)
+	assert.Equal(t, 100.0, obj.Odds)
+	assert.Equal(t, 69.0, obj.SellingPercentage)
 	assert.Equal(t, 200.23, obj.SellingPrice)
 	assert.Equal(t, 15.82, obj.CurrentSellingPrice)
-	assert.Equal(t, 22, obj.PercentageSold)
+	assert.Equal(t, 22.0, obj.PercentageSold)
 	assert.Equal(t, 172.29, obj.AmountSold)
 }
 
@@ -74,12 +74,12 @@ func TestToListResponse(t *testing.T) {
 	temp := ToListResponse(&arr)
 
 	for _, s := range *temp {
-		assert.Equal(t, 100, s.TotalWagerValue)
-		assert.Equal(t, 100, s.Odds)
-		assert.Equal(t, 69, s.SellingPercentage)
+		assert.Equal(t, 100.0, s.TotalWagerValue)
+		assert.Equal(t, 100.0, s.Odds)
+		assert.Equal(t, 69.0, s.SellingPercentage)
 		assert.Equal(t, 200.23, s.SellingPrice)
 		assert.Equal(t, 15.82, s.CurrentSellingPrice)
-		assert.Equal(t, 22, s.PercentageSold)
+		assert.Equal(t, 22.0, s.PercentageSold)
 		assert.Equal(t, 172.29, s.AmountSold)
 	}
 }

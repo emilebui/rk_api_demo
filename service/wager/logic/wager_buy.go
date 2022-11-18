@@ -44,7 +44,6 @@ func Buy(input *wagerdto.BuyWagerInput) (*models.Transaction, errutil.EchoError)
 
 	// Update CurrentSellingPrice
 	wager.CurrentSellingPrice = wager.CurrentSellingPrice - input.BuyingPrice
-	println(wager.CurrentSellingPrice)
 
 	// Update AmountSold
 	wager.AmountSold += input.BuyingPrice

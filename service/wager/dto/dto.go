@@ -30,7 +30,7 @@ func Struct2PlaceWagerResponse(wager *models.Wager) *models.Wager {
 }
 
 func Struct2BuyWagerResponse(transaction *models.Transaction) *models.Transaction {
-	transaction.BuyingPrice = math.Round(transaction.BuyingPrice)
+	transaction.BuyingPrice = helpers.RoundFloat(transaction.BuyingPrice)
 	return transaction
 }
 

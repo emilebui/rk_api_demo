@@ -33,7 +33,7 @@ func TestPlace(t *testing.T) {
 		t.Fatal("this should not fail")
 	}
 
-	assert.Equal(t, 300, wager.SellingPrice)
-	assert.Equal(t, 0, wager.AmountSold)
-	assert.Equal(t, 0, wager.PercentageSold)
+	assert.Equal(t, 300.0, wager.SellingPrice)
+	assert.Equal(t, 0.0, wager.AmountSold)
+	assert.Equal(t, 0.0, wager.PercentageSold)
 }

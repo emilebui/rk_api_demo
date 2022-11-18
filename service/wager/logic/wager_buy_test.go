@@ -39,6 +39,7 @@ func TestCreateTransaction(t *testing.T) {
 		WagerId:     1,
 		BuyingPrice: 200,
 	}
+
 	_, err := CreateTransaction(input)
 	if err == nil {
 		t.Fatal("This should fail")
@@ -94,5 +95,5 @@ func TestBuy(t *testing.T) {
 		t.Fatal("This should not fail")
 	}
 
-	assert.Equal(t, 0, wager.CurrentSellingPrice)
+	assert.Equal(t, 0.0, wager.CurrentSellingPrice)
 }
