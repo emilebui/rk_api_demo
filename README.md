@@ -46,6 +46,15 @@
       - You can do `/wagers?sort=selling_price` (all is desc)
       - Default is Id (highest to lowest)
 
+  - Tech stack:
+    - `RK_BOOT stack`
+      - `labstack/echo`
+      - `zap`
+    - `gORM`
+    - `PostgreSQL`
+    - `SQLite`
+    - `docker`, `docker-compose`
+
 ## Installation Instructions
 
 ### Requirements
