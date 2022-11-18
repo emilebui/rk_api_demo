@@ -35,7 +35,7 @@ func main() {
 	boot := rkboot.NewBoot()
 
 	// Register handler
-	echoEntry := rkecho.GetEchoEntry("greeter")
+	echoEntry := rkecho.GetEchoEntry("betAPI")
 	// Use *echo.Echo adding handler.
 
 	// Add shutdown hook function

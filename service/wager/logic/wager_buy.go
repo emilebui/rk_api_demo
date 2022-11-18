@@ -49,7 +49,7 @@ func Buy(input *wagerdto.BuyWagerInput) (*models.Transaction, errutil.EchoError)
 	wager.AmountSold += input.BuyingPrice
 
 	// Update PercentageSold
-	wager.PercentageSold = wager.AmountSold / wager.SellingPrice
+	wager.PercentageSold = (wager.AmountSold / wager.SellingPrice) * 100
 
 	// Save
 	dbErr := sqldb.DB.Model(&wager).Select("*").Updates(&wager).Error

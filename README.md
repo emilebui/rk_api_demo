@@ -27,6 +27,25 @@
     - Database connection:
         - SQL database (postgres, sqlite)
 
+- Requirements Features:
+  - `POST /wagers`: 
+    - response object will be exactly as required:
+      - `total_wager_value` is int (round nearest)
+      - `odds` is int (round nearest)
+      - `selling_percentage` is int (round nearest)
+      - `selling_price` is decimal to two decimal places (round nearest)
+      - `current_selling_price` is decimal to two decimal places (round nearest)
+      - `percentage_sold` is int (round nearest)
+      - `amount_sold` is decimal to two decimal places (round nearest)
+  - `POST /buy/:wager_id`
+    - response object will be exactly as required:
+      - `buying_price` is decimal to two decimal places (round nearest)
+  - `GET /wagers`
+    - response object will be exactly as required (as in `POST /wagers`)
+    - there is also sort feature
+      - You can do `/wagers?sort=selling_price` (all is desc)
+      - Default is Id (highest to lowest)
+
 ## Installation Instructions
 
 ### Requirements
@@ -55,7 +74,7 @@
 
 ### Testing
 
-- Run: `go test ./... -cover`
+- Run: `go test ./... -bench=Benchmark -cover`
 
 ## Project Structure
 - `cmd`: This contains all the run commands for the app

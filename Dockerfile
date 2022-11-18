@@ -21,7 +21,6 @@ WORKDIR /app
 
 COPY --from=0 /opt/${app_name}/go_app /app/go_app
 COPY --from=0 /opt/${app_name}/docs /app/docs
-COPY --from=0 /opt/${app_name}/config /app/config
 COPY --from=0 /opt/${app_name}/boot.yaml /app/boot.yaml
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
