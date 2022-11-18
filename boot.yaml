@@ -48,7 +48,7 @@ logger:
         service: rk_echo_api
 event:
   - name: my-event
-    outputPaths: [""]
+    outputPaths: ["stdout"]
     #outputPaths: ["logs/event.log"]
 
 # DB Config, if you don't use any of these, just delete
